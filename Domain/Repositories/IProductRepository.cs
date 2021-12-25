@@ -4,8 +4,8 @@ using api.Domain.Models;
 
 namespace api.Domain.Repositories
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface IProductRepository : IRepository<Product>
     {
-        Task<IEnumerable<Category>> FindByNameAsync(string name);
+        Task<IEnumerable<Product>> FindByNameAsync(string name);
     }
 }

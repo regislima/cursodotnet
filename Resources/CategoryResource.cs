@@ -1,8 +1,14 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using api.Domain.Models;
+
 namespace api.Resources
 {
-    public class CategoryResource
+    public class CategoryResource : BaseModel
     {
-        public int Id { get; set; }
-        public string name { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string Name { get; set; }
+        public IEnumerable<ProductResource> Products { get; set; }
     }
 }

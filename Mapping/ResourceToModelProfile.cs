@@ -8,7 +8,9 @@ namespace api.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<SaveCategoryResource, Category>();
+            CreateMap<CategoryResource, Category>();
+            CreateMap<ProductResource, Product>();
+            CreateMap<UserResource, User>();
         }
     }
 }

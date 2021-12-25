@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Domain.Comunication;
+using api.Util.Comunication;
 using api.Domain.Models;
 using api.Domain.Repositories;
 using api.Domain.Services;
+using api.Util.Extensions;
 
 namespace api.Services
 {
@@ -19,24 +20,29 @@ namespace api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<CategoryResponse> DeleteAsync(int id)
+        public async Task<Response<Category>> DeleteAsync(int id)
         {
             var existingCategory = await _categoryRepository.FindByIdAsync(id);
 
-            if (existingCategory is null)
-                return new CategoryResponse("Categoria não encontrada.");
+            if (existingCategory.IsNull())
+                return new Response<Category>("Categoria não encontrada.");
 
             try
             {
                 _categoryRepository.Remove(existingCategory);
                 await _unitOfWork.CompleteAsync();
 
-                return new CategoryResponse(existingCategory);
+                return new Response<Category>(existingCategory);
             }
             catch (Exception ex)
             {
-                return new CategoryResponse($"Erro ao remover categoria: {ex.Message}");
+                return new Response<Category>($"Erro ao remover categoria: {ex.Message}");
             }
+        }
+
+        public async Task<Category> FindByIdAsync(int id)
+        {
+            return await _categoryRepository.FindByIdAsync(id);
         }
 
         public async Task<IEnumerable<Category>> ListAsync()
@@ -44,41 +50,46 @@ namespace api.Services
             return await _categoryRepository.ListAsync();
         }
 
-        public async Task<CategoryResponse> SaveAsync(Category category)
+        public async Task<Response<Category>> SaveAsync(Category entity)
         {
             try
             {
-                await _categoryRepository.AddAsync(category);
+                await _categoryRepository.AddAsync(entity);
                 await _unitOfWork.CompleteAsync();
 
-                return new CategoryResponse(category);
+                return new Response<Category>(entity);
             }
             catch (Exception ex)
             {
-                return new CategoryResponse($"Erro ao salvar cateogria: {ex.Message}");
+                return new Response<Category>($"Erro ao salvar categoria: {ex.Message}");
             }
         }
 
-        public async Task<CategoryResponse> UpdateAsync(int id, Category category)
+        public async Task<Response<Category>> UpdateAsync(int id, Category entity)
         {
             var existingCategory = await _categoryRepository.FindByIdAsync(id);
 
-            if (existingCategory is null)
-                return new CategoryResponse("Categoria não encontrada.");
+            if (existingCategory.IsNull())
+                return new Response<Category>("Categoria não encontrada.");
             
-            existingCategory.Name = category.Name;
+            existingCategory.Name = entity.Name;
 
             try
             {
                 _categoryRepository.update(existingCategory);
                 await _unitOfWork.CompleteAsync();
 
-                return new CategoryResponse(existingCategory);
+                return new Response<Category>(existingCategory);
             }
             catch (Exception ex)
             {
-                return new CategoryResponse($"Erro ao atualizar categoria: {ex.Message}");
+                return new Response<Category>($"Erro ao atualizar categoria: {ex.Message}");
             }
+        }
+
+        public async Task<IEnumerable<Category>> FindByNameAsync(string name)
+        {
+            return await _categoryRepository.FindByNameAsync(name);
         }
     }
 }

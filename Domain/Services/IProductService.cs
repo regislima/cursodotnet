@@ -4,8 +4,8 @@ using api.Domain.Models;
 
 namespace api.Domain.Services
 {
-    public interface ICategoryService : IService<Category>
+    public interface IProductService : IService<Product>
     {
-        Task<IEnumerable<Category>> FindByNameAsync(string name);
+        Task<IEnumerable<Product>> FindByNameAsync(string name);
     }
 }

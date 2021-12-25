@@ -1,6 +1,6 @@
 # api
 WebServices com AspNet Core ministrado pelo prof. Dr. Bruno Honorato.
 
-Implementação usando o .Net 5
+Implementação usando generics e .Net 5
 
-Módulo I - Implementação da api
+Módulo II - Implementação da api com JWT

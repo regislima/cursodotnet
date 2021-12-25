@@ -1,11 +1,11 @@
 namespace api.Domain.Models
 {
-    public class Product
+    public class Product : BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public short QuantityInPackage { get; set; }
         public EUnityOfMeasurement UnitOfMeasurement { get; set; }
+        
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }

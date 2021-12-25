@@ -2,10 +2,9 @@ using System.Collections.Generic;
 
 namespace api.Domain.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public IList<Product> Products = new List<Product>();
+        public IList<Product> Products { get; set; }
     }
 }
