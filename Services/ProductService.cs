@@ -59,6 +59,7 @@ namespace api.Services
         {
             try
             {
+                entity.CreateDate = DateTime.Now;
                 await _productRepository.AddAsync(entity);
                 await _unitOfWork.CompleteAsync();
 
@@ -78,6 +79,7 @@ namespace api.Services
                 return new Response<Product>("Produto não encontrada.");
             
             existingProduct.Name = entity.Name;
+            existingProduct.UpdateDate = DateTime.Now;
 
             try
             {

@@ -54,6 +54,7 @@ namespace api.Services
         {
             try
             {
+                entity.CreateDate = DateTime.Now;
                 await _categoryRepository.AddAsync(entity);
                 await _unitOfWork.CompleteAsync();
 
@@ -73,6 +74,7 @@ namespace api.Services
                 return new Response<Category>("Categoria não encontrada.");
             
             existingCategory.Name = entity.Name;
+            existingCategory.UpdateDate = DateTime.Now;
 
             try
             {
