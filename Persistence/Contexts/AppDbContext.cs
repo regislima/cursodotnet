@@ -21,8 +21,8 @@ namespace api.Persistence.Contexts
             builder.Entity<Category>().HasKey(c => c.Id);
             builder.Entity<Category>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<Category>().Property(c => c.CreateDate).ValueGeneratedOnAdd().HasDefaultValue(DateTime.Now);
-            builder.Entity<Category>().Property(c => c.UpdateDate).ValueGeneratedOnUpdate().HasDefaultValue(DateTime.Now);
+            builder.Entity<Category>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<Category>().Property(c => c.UpdateDate).IsRequired(false);
             builder.Entity<Category>().HasMany(c => c.Products).WithOne(p => p.Category).HasForeignKey(p => p.CategoryId);
 
             builder.Entity<Product>().ToTable("products");
@@ -31,16 +31,16 @@ namespace api.Persistence.Contexts
             builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Product>().Property(p => p.QuantityInPackage).IsRequired();
             builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
-            builder.Entity<Product>().Property(c => c.CreateDate).ValueGeneratedOnAdd().HasDefaultValue(DateTime.Now);
-            builder.Entity<Product>().Property(c => c.UpdateDate).ValueGeneratedOnUpdate().HasDefaultValue(DateTime.Now);
+            builder.Entity<Product>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<Product>().Property(c => c.UpdateDate).IsRequired(false);
 
             builder.Entity<User>().ToTable("users");
             builder.Entity<User>().HasKey(u => u.Id);
             builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<User>().Property(u => u.Login).IsRequired().HasMaxLength(50);
             builder.Entity<User>().Property(u => u.Password).IsRequired().HasMaxLength(10);
-            builder.Entity<User>().Property(c => c.CreateDate).ValueGeneratedOnAdd().HasDefaultValue(DateTime.Now);
-            builder.Entity<User>().Property(c => c.UpdateDate).ValueGeneratedOnUpdate().HasDefaultValue(DateTime.Now);
+            builder.Entity<User>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<User>().Property(c => c.UpdateDate).IsRequired(false);
             builder.Entity<User>().HasData
             (
                 new User
