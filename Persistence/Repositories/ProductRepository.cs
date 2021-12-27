@@ -19,12 +19,12 @@ namespace api.Persistence.Repositories
 
         public async Task<Product> FindByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.Include(prod => prod.Category).FirstOrDefaultAsync(prod => prod.Id == id);
         }
 
         public async Task<IEnumerable<Product>> ListAsync()
         {
-            return await _context.Products.Include(product => product.Category).ToListAsync();
+            return await _context.Products.Include(prod => prod.Category).ToListAsync();
         }
 
         public void Remove(Product entity)

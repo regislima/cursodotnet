@@ -19,7 +19,7 @@ namespace api.Persistence.Repositories
 
         public async Task<Category> FindByIdAsync(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            return await _context.Categories.Include(cat => cat.Products).FirstOrDefaultAsync(cat => cat.Id == id);
         }
 
         public async Task<IEnumerable<Category>> ListAsync()

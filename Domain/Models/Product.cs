@@ -6,7 +6,9 @@ namespace api.Domain.Models
         public short QuantityInPackage { get; set; }
         public EUnityOfMeasurement UnitOfMeasurement { get; set; }
         
+        #region Foreign Key
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        #endregion
     }
 }

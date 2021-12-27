@@ -33,6 +33,7 @@ namespace api.Persistence.Contexts
             builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
             builder.Entity<Product>().Property(c => c.CreateDate).IsRequired();
             builder.Entity<Product>().Property(c => c.UpdateDate).IsRequired(false);
+            builder.Entity<Product>().HasOne(p => p.Category).WithMany(p => p.Products).HasForeignKey(p => p.CategoryId);
 
             builder.Entity<User>().ToTable("users");
             builder.Entity<User>().HasKey(u => u.Id);
