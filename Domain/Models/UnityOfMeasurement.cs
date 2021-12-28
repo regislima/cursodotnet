@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace api.Domain.Models
 {
-    public enum EUnityOfMeasurement
+    public enum UnityOfMeasurement
     {
         [Description("UN")]
         Unity = 1,

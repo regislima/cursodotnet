@@ -1,6 +1,5 @@
 using System;
 using api.Domain.Models;
-using api.Util.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Persistence.Contexts
@@ -23,7 +22,6 @@ namespace api.Persistence.Contexts
             builder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Category>().Property(c => c.CreateDate).IsRequired();
             builder.Entity<Category>().Property(c => c.UpdateDate).IsRequired(false);
-            builder.Entity<Category>().HasMany(c => c.Products).WithOne(p => p.Category).HasForeignKey(p => p.CategoryId);
 
             builder.Entity<Product>().ToTable("products");
             builder.Entity<Product>().HasKey(p => p.Id);
@@ -33,7 +31,6 @@ namespace api.Persistence.Contexts
             builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
             builder.Entity<Product>().Property(c => c.CreateDate).IsRequired();
             builder.Entity<Product>().Property(c => c.UpdateDate).IsRequired(false);
-            builder.Entity<Product>().HasOne(p => p.Category).WithMany(p => p.Products).HasForeignKey(p => p.CategoryId);
 
             builder.Entity<User>().ToTable("users");
             builder.Entity<User>().HasKey(u => u.Id);

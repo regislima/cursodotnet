@@ -4,7 +4,7 @@ namespace api.Domain.Models
     {
         public string Name { get; set; }
         public short QuantityInPackage { get; set; }
-        public EUnityOfMeasurement UnitOfMeasurement { get; set; }
+        public UnityOfMeasurement UnitOfMeasurement { get; set; }
         
         #region Foreign Key
         public int CategoryId { get; set; }
