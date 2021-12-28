@@ -13,20 +13,14 @@ namespace api.Util.Security
         public static string GenerateToken(IConfiguration configuration, User user)
         {
             int tokenExpiredTimeLapse = int.Parse(configuration["TokenExpireTimeLapse"]);
-            byte[] encoding = Encoding.UTF8.GetBytes(configuration["SecretKey"]);
+            byte[] encoding = Encoding.UTF8.GetBytes(configuration["SecurityKey"]);
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(encoding);
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-            
             JwtSecurityToken token = new JwtSecurityToken
             (
                 issuer: configuration["Issuer"],
                 audience: configuration["Audience"],
-                claims: new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Login),
-                    new Claim(ClaimTypes.Role, user.Role.ToString())
-                },
                 expires: DateTime.Now.AddMinutes(tokenExpiredTimeLapse),
                 signingCredentials: credentials
             );

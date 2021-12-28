@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using api.Domain.Repositories;
 using api.Persistence.Repositories;
 using api.Services;
-using api.Domain.Models;
 using api.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;

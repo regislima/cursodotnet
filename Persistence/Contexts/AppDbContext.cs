@@ -48,7 +48,8 @@ namespace api.Persistence.Contexts
                 {
                     Id = 1,
                     Login = "admin",
-                    Password = "admin"
+                    Password = "admin",
+                    CreateDate = DateTime.Now
                 }
             );
         }
