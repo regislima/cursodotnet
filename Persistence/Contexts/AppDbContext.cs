@@ -22,6 +22,7 @@ namespace api.Persistence.Contexts
             builder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Category>().Property(c => c.CreateDate).IsRequired();
             builder.Entity<Category>().Property(c => c.UpdateDate).IsRequired(false);
+            builder.Entity<Category>().HasMany(c => c.Products).WithOne(p => p.Category).HasForeignKey(p => p.CategoryId);
 
             builder.Entity<Product>().ToTable("products");
             builder.Entity<Product>().HasKey(p => p.Id);
