@@ -1,0 +1,55 @@
+using System;
+using api.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace api.Persistence.Contexts
+{
+    public class AppDbContext : DbContext
+    {
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Category>().ToTable("categories");
+            builder.Entity<Category>().HasKey(c => c.Id);
+            builder.Entity<Category>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Category>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<Category>().Property(c => c.UpdateDate).IsRequired(false);
+
+            builder.Entity<Product>().ToTable("products");
+            builder.Entity<Product>().HasKey(p => p.Id);
+            builder.Entity<Product>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Product>().Property(p => p.QuantityInPackage).IsRequired();
+            builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
+            builder.Entity<Product>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<Product>().Property(c => c.UpdateDate).IsRequired(false);
+            builder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryId);
+
+            builder.Entity<User>().ToTable("users");
+            builder.Entity<User>().HasKey(u => u.Id);
+            builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<User>().Property(u => u.Login).IsRequired().HasMaxLength(50);
+            builder.Entity<User>().Property(u => u.Password).IsRequired().HasMaxLength(10);
+            builder.Entity<User>().Property(c => c.CreateDate).IsRequired();
+            builder.Entity<User>().Property(c => c.UpdateDate).IsRequired(false);
+            builder.Entity<User>().HasData
+            (
+                new User
+                {
+                    Id = 1,
+                    Login = "admin",
+                    Password = "admin",
+                    CreateDate = DateTime.Now
+                }
+            );
+        }
+    }
+}
